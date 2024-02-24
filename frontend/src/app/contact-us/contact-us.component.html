@@ -1,11 +1,11 @@
 <header>
   <nav id="navbar">
     <div class="container">
-      <h1 class="logo"><a href="">KBT</a></h1>
+      <h1 class="logo"><a routerLink="/">Gyobos</a></h1>
       <ul>
-        <li><a href="">Home</a></li>
-        <li><a href="about">About Us</a></li>
-        <li><a class="current" href="contact">Contact Us</a></li>
+        <li><a routerLink="">Home</a></li>
+        <li><a routerLink="/about">About Us</a></li>
+        <li><a class="current" routerLink="/contact">Contact Us</a></li>
       </ul>
     </div>
   </nav>
@@ -15,6 +15,8 @@
   <div class="container">
     <h1 class="l-heading"><span class="text-primary">Contact </span> Us</h1>
     <p>Please fill in all spots so you can contact us</p>
+
+    <!-- TODO: Add form action -->
     <form action="process.php">
       <div class="form-group">
         <label for="name">Name</label>
