@@ -8,4 +8,8 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
   isUserAuthenticated = true;
   userName = 'Balázs';
+
+  onLog() {
+    this.isUserAuthenticated = !this.isUserAuthenticated;
+  }
 }
