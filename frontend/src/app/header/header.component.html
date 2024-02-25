@@ -1,6 +1,20 @@
 <nav id="navbar">
   <div class="container">
     <h1 class="logo"><a routerLink="/">Gyobos</a></h1>
+    <ul *ngIf="!isUserAuthenticated">
+      <li><a routerLinkActive="current" routerLink="/register">Register</a></li>
+      <li><a routerLinkActive="current" routerLink="/login">Login</a></li>
+    </ul>
+    <ul *ngIf="isUserAuthenticated">
+      <li>
+        <a>Welcome {{ userName }}!</a>
+      </li>
+      <li>
+        <a routerLinkActive="current" routerLink="/dashboard">Dashboard</a>
+      </li>
+      <li><a routerLinkActive="current" routerLink="/profile">Profile</a></li>
+      <li><a routerLinkActive="current" routerLink="/logout">Logout</a></li>
+    </ul>
     <ul>
       <li>
         <a
@@ -14,10 +28,6 @@
       <li>
         <a routerLinkActive="current" routerLink="/contact">Contact Us</a>
       </li>
-    </ul>
-    <ul>
-      <li><a routerLinkActive="current" routerLink="/register">Register</a></li>
-      <li><a routerLinkActive="current" routerLink="/login">Login</a></li>
     </ul>
   </div>
 </nav>
