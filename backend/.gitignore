@@ -1,0 +1,44 @@
+# ASP.NET artifacts
+obj/
+bin/
+*.user
+*.vs
+*.suo
+*.cache
+
+# Visual Studio files
+.vscode/
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.ide
+*.pdb
+*.dll
+*.exe
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Tt]est[Rr]esult*/
+[Tt]est[Rr]esults*/
+*.VisualState.xml
+*.dbmdl
+*.jfm
+*.bak
+*.cache
+*.cloudberry
+*.cwproj
+*.user
