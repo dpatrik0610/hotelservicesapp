@@ -1,1 +1,23 @@
-<p>header works!</p>
+<nav id="navbar">
+  <div class="container">
+    <h1 class="logo"><a routerLink="/">Gyobos</a></h1>
+    <ul>
+      <li>
+        <a
+          routerLinkActive="current"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLink="/home"
+          >Home</a
+        >
+      </li>
+      <li><a routerLinkActive="current" routerLink="/about">About Us</a></li>
+      <li>
+        <a routerLinkActive="current" routerLink="/contact">Contact Us</a>
+      </li>
+    </ul>
+    <ul>
+      <li><a routerLinkActive="current" routerLink="/register">Register</a></li>
+      <li><a routerLinkActive="current" routerLink="/login">Login</a></li>
+    </ul>
+  </div>
+</nav>
