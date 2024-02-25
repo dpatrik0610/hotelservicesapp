@@ -7,6 +7,7 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HeaderComponent } from './header/header.component';
+import { RegisterLoginComponent } from './register-login/register-login.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { HeaderComponent } from './header/header.component';
     WelcomePageComponent,
     AboutUsComponent,
     ContactUsComponent,
-    HeaderComponent
+    HeaderComponent,
+    RegisterLoginComponent
   ],
   imports: [
     BrowserModule,
