@@ -42,3 +42,6 @@ bld/
 *.cloudberry
 *.cwproj
 *.user
+
+appsettings.json
+appsettings.*.json
