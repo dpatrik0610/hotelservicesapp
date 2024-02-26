@@ -1,0 +1,39 @@
+<link
+  href="https://fonts.googleapis.com/css?family=Cedarville Cursive"
+  rel="stylesheet"
+/>
+
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <div class="container">
+    <a routerLink="/home" routerLinkActive="active" class="navbar-brand"
+      ><i>Gyobos</i></a
+    >
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a routerLink="/home" routerLinkActive="active" class="nav-link"
+          >Home</a
+        >
+      </li>
+      <li class="nav-item">
+        <a routerLink="/about" routerLinkActive="active" class="nav-link"
+          >About</a
+        >
+      </li>
+      <li class="nav-item">
+        <a routerLink="/contact" routerLinkActive="active" class="nav-link"
+          >Contact</a
+        >
+      </li>
+    </ul>
+    <div>
+      <div *ngIf="isUserAuthenticated" class="navbar-text">
+        Welcome {{ userName }}
+      </div>
+      <div *ngIf="!isUserAuthenticated">
+        <button routerLink="/login" class="btn btn-primary btn-lg">
+          Login/Register
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
