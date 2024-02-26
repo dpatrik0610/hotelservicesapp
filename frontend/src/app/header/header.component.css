@@ -1,0 +1,9 @@
+.navbar-brand{
+    font-size: 2rem;
+    font-family: 'Cedarville Cursive';
+}
+
+.navbar-text{
+    font-size: 20px;
+    margin-right: 20px;
+}
