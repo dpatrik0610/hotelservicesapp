@@ -28,9 +28,14 @@
     <div>
       <div *ngIf="isUserAuthenticated" class="navbar-text">
         Welcome {{ userName }}
+        <button (click)="onLog()" class="btn btn-danger btn-lg">Logout</button>
       </div>
       <div *ngIf="!isUserAuthenticated">
-        <button routerLink="/login" class="btn btn-primary btn-lg">
+        <button
+          (click)="onLog()"
+          routerLink="/login"
+          class="btn btn-primary btn-lg"
+        >
           Login/Register
         </button>
       </div>
