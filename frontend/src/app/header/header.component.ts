@@ -1,6 +1,6 @@
 import { Component, Host, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../shared/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +21,11 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  constructor(private user: UserService, private route: ActivatedRoute) {}
+  constructor(
+    private user: UserService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.isUserAuthenticated = this.user.isUserLoggedIn;
@@ -32,7 +36,6 @@ export class HeaderComponent implements OnInit {
   }
 
   onLog() {
-    this.user.isUserLoggedIn = !this.user.isUserLoggedIn;
-    this.isUserAuthenticated = this.user.isUserLoggedIn;
+    this.router.navigate(['/login']);
   }
 }
