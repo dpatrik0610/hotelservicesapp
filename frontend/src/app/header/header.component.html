@@ -3,7 +3,11 @@
   rel="stylesheet"
 />
 
-<nav class="navbar navbar-expand navbar-dark bg-dark">
+<nav
+  class="navbar navbar-expand navbar-dark bg-dark"
+  (scroll)="onScroll()"
+  [ngClass]="navbarFixed ? 'fixed' : 'nofixed'"
+>
   <div class="container">
     <a routerLink="/home" routerLinkActive="active" class="navbar-brand"
       ><i>Gyobos</i></a
@@ -27,14 +31,21 @@
     </ul>
     <div>
       <div *ngIf="isUserAuthenticated" class="navbar-text">
-        Welcome {{ userName }}
-        <button (click)="onLog()" class="btn btn-danger btn-lg">Logout</button>
+        Welcome {{ userName }}!
+        <button
+          [ngClass]="isLoginPage ? 'disabled' : ''"
+          (click)="onLog()"
+          class="btn btn-danger btn-lg"
+        >
+          Logout
+        </button>
       </div>
       <div *ngIf="!isUserAuthenticated">
         <button
           (click)="onLog()"
           routerLink="/login"
           class="btn btn-primary btn-lg"
+          [ngClass]="isLoginPage ? 'disabled' : ''"
         >
           Login/Register
         </button>

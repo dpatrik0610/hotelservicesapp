@@ -5,6 +5,7 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HeaderComponent } from './header/header.component';
+import { RegisterLoginComponent } from './register-login/register-login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'about', component: AboutUsComponent },
   { path: 'contact', component: ContactUsComponent },
   { path: 'header', component: HeaderComponent },
+  { path: 'login', component: RegisterLoginComponent },
   { path: '**', redirectTo: '/home' },
 ];
 
