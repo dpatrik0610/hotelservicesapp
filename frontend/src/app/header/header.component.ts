@@ -1,5 +1,6 @@
 import { Component, Host, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../shared/user.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,7 @@ export class HeaderComponent implements OnInit {
   isUserAuthenticated = false;
   userName = 'Balázs';
   navbarFixed = false;
+  isLoginPage = false;
 
   @HostListener('window:scroll', ['$event']) onScroll() {
     if (window.scrollY > 100) {
@@ -19,9 +21,14 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  constructor(private user: UserService) {}
+  constructor(private user: UserService, private route: ActivatedRoute) {}
+
   ngOnInit(): void {
     this.isUserAuthenticated = this.user.isUserLoggedIn;
+
+    this.route.url.subscribe((url) => {
+      this.isLoginPage = url[0].path === 'login';
+    });
   }
 
   onLog() {
