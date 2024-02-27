@@ -3,7 +3,11 @@
   rel="stylesheet"
 />
 
-<nav class="navbar navbar-expand navbar-dark bg-dark">
+<nav
+  class="navbar navbar-expand navbar-dark bg-dark"
+  (scroll)="onScroll()"
+  [ngClass]="navbarFixed ? 'fixed' : 'nofixed'"
+>
   <div class="container">
     <a routerLink="/home" routerLinkActive="active" class="navbar-brand"
       ><i>Gyobos</i></a

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Host, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../shared/user.service';
 
 @Component({
@@ -9,6 +9,15 @@ import { UserService } from '../shared/user.service';
 export class HeaderComponent implements OnInit {
   isUserAuthenticated = false;
   userName = 'Balázs';
+  navbarFixed = false;
+
+  @HostListener('window:scroll', ['$event']) onScroll() {
+    if (window.scrollY > 100) {
+      this.navbarFixed = true;
+    } else {
+      this.navbarFixed = false;
+    }
+  }
 
   constructor(private user: UserService) {}
   ngOnInit(): void {

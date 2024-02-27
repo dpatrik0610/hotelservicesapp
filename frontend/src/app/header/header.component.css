@@ -7,3 +7,16 @@
     font-size: 20px;
     margin-right: 20px;
 }
+
+.fixed{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transition: 0.2s linear;
+}
+
+.nofixed{
+  position: static;
+  transition: 0.2s linear;
+  top: -50px;
+}
