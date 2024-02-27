@@ -14,6 +14,8 @@ import { RegisterLoginComponent } from './register-login/register-login.componen
 
 //PrimeNG modules
 import { ButtonModule } from 'primeng/button';
+import { AutoFocusModule } from 'primeng/autofocus';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,13 @@ import { ButtonModule } from 'primeng/button';
     HeaderComponent,
     RegisterLoginComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, ButtonModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ButtonModule,
+    AutoFocusModule,
+    InputTextModule,
+  ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
 })

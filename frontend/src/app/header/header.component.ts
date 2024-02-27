@@ -35,7 +35,5 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  onLog() {
-    this.router.navigate(['/login']);
-  }
+  onLog() {}
 }
