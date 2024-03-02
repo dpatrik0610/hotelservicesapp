@@ -1,5 +1,18 @@
+@import "primeicons/primeicons.css";
+
 body {
   background-image: url(./assets/img/luxury-bg.jpg);
-  background-repeat: no-repeat;
   background-size: cover;
+  max-height: 100vh;
+  color: red;
+}
+
+.noscrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.noscrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
