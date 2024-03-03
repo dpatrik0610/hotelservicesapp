@@ -1,6 +1,7 @@
 .navbar-brand{
     font-size: 2rem;
     font-family: 'Cedarville Cursive';
+    text-shadow: 2px 2px 5px #000000;
 }
 
 .navbar-text{
