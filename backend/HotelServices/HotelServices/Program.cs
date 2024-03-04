@@ -1,6 +1,32 @@
+using HotelServices.Database;
+using HotelServices.Services.Interfaces;
+using HotelServices.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
+    var config = provider.GetRequiredService<IConfiguration>();
+    var connectionString = config.GetValue<string>("MongoDB:ConnectionURI");
+    var databaseName = config.GetValue<string>("MongoDB:DatabaseName");
+
+    if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(databaseName))
+    {
+        // Log or throw an exception indicating missing or invalid configuration.
+        throw new ApplicationException("MongoDB connection settings are missing or invalid.");
+    }
+
+    try
+    {
+        return new MongoDatabaseProvider(connectionString, databaseName);
+    }
+    catch (Exception ex)
+    {
+        // Log or throw an exception indicating failure to establish connection.
+        throw new ApplicationException("Failed to establish connection to the MongoDB server.", ex);
+    }
+});
+
+builder.Services.AddSingleton<IRoomService, RoomService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
