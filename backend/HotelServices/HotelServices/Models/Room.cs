@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System.Text.Json.Serialization;
 namespace HotelServices.Models
 {
-    public class Rooms
+    public class Room
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
