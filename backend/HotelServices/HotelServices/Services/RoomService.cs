@@ -8,10 +8,13 @@ namespace HotelServices.Services
     public class RoomService : IRoomService
     {
         private readonly IMongoCollection<Room> _roomCollection;
-        public RoomService(IMongoDatabaseProvider databaseProvider) 
+        private readonly ILogger<RoomService> _logger;
+
+        public RoomService(IMongoDatabaseProvider databaseProvider, ILogger<RoomService> logger)
         {
             var database = databaseProvider.GetDatabase();
             _roomCollection = database.GetCollection<Room>("Rooms");
+            _logger = logger;
         }
 
         public async Task<Room> GetRoomByNumberAsync(int roomNumber)
@@ -22,10 +25,11 @@ namespace HotelServices.Services
             }
             catch (Exception ex)
             {
-                // Implement logger here.
+                _logger.LogError(ex, "An error occurred while fetching room data for room number {RoomNumber}.", roomNumber);
                 throw new Exception("An error occurred while fetching room data.", ex);
             }
         }
+
         public async Task<List<Room>> GetAllRoomsAsync()
         {
             try
@@ -34,7 +38,7 @@ namespace HotelServices.Services
             }
             catch (Exception ex)
             {
-                // Implement logger here.
+                _logger.LogError(ex, "An error occurred while fetching all rooms.");
                 throw new Exception("An error occurred while fetching all rooms.", ex);
             }
         }
@@ -47,7 +51,7 @@ namespace HotelServices.Services
             }
             catch (Exception ex)
             {
-                // Implement logger here.
+                _logger.LogError(ex, "An error occurred while fetching available rooms.");
                 throw new Exception("An error occurred while fetching available rooms.", ex);
             }
         }
@@ -60,7 +64,7 @@ namespace HotelServices.Services
             }
             catch (Exception ex)
             {
-                // Implement logger here.
+                _logger.LogError(ex, "An error occurred while adding the room.");
                 throw new Exception("An error occurred while adding the room.", ex);
             }
         }
@@ -74,7 +78,7 @@ namespace HotelServices.Services
             }
             catch (Exception ex)
             {
-                // Implement logger here.
+                _logger.LogError(ex, "An error occurred while deleting the room with room number {RoomNumber}.", roomNumber);
                 throw new Exception("An error occurred while deleting the room.", ex);
             }
         }
@@ -88,7 +92,7 @@ namespace HotelServices.Services
             }
             catch (Exception ex)
             {
-                // Implement logger here.
+                _logger.LogError(ex, "An error occurred while updating the room's data for room number {RoomNumber}.", roomNumber);
                 throw new Exception("An error occurred while updating the room's data.", ex);
             }
         }

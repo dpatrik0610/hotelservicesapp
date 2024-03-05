@@ -1,9 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using HotelServices.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 using HotelServices.Models;
-using MongoDB.Driver;
 using HotelServices.Services.Interfaces;
+using HotelServices.Services;
 
 namespace HotelServices.Controllers
 {
@@ -12,9 +10,11 @@ namespace HotelServices.Controllers
     public class RoomController : Controller
     {
         private readonly IRoomService _roomService;
-        public RoomController(IRoomService roomService)
+        private readonly ILogger<RoomController> _logger;
+        public RoomController(IRoomService roomService, ILogger<RoomController> logger)
         {
             _roomService = roomService;
+            _logger = logger;
         }
 
         [HttpGet("{roomNumber}")]
@@ -29,7 +29,7 @@ namespace HotelServices.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Implement logger here.
+                _logger.LogError("An error occurred while retrieving the room: {0}", ex);
                 return StatusCode(500, "An error occurred while retrieving the room.");
             }
         }
@@ -44,7 +44,7 @@ namespace HotelServices.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Implement logger here.
+                _logger.LogError("An error occurred while retrieving all rooms: {0}", ex);
                 return StatusCode(500, "An error occurred while retrieving all rooms.");
             }
         }
@@ -59,7 +59,7 @@ namespace HotelServices.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Implement logger here.
+                _logger.LogError("An error occurred while retrieving available rooms: {0}", ex);
                 return StatusCode(500, "An error occurred while retrieving available rooms.");
             }
         }
@@ -74,7 +74,7 @@ namespace HotelServices.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Implement logger here.
+                _logger.LogError("An error occurred while adding the room: {0}", ex);
                 return StatusCode(500, "An error occurred while adding the room.");
             }
         }
@@ -93,7 +93,7 @@ namespace HotelServices.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Implement logger here.
+                _logger.LogError("An error occurred while updating the room: {0}", ex);
                 return StatusCode(500, "An error occurred while updating the room.");
             }
         }
@@ -110,7 +110,7 @@ namespace HotelServices.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Implement logger here.
+                _logger.LogError("An error occurred while deleting the room: {0}", ex);
                 return StatusCode(500, "An error occurred while deleting the room.");
             }
         }
