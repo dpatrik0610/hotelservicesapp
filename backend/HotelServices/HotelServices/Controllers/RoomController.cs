@@ -69,6 +69,9 @@ namespace HotelServices.Controllers
         {
             try
             {
+                var roomExist = await _roomService.GetRoomByNumberAsync(room.RoomNumber);
+                if (roomExist != null) return StatusCode(403, "Room already exists by this number.");
+
                 await _roomService.AddRoomAsync(room);
                 return CreatedAtAction(nameof(GetRoom), new { roomNumber = room.RoomNumber }, room);
             }
