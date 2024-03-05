@@ -1,9 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using HotelServices.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 using HotelServices.Models;
-using MongoDB.Driver;
 using HotelServices.Services.Interfaces;
+using HotelServices.Services;
 
 namespace HotelServices.Controllers
 {
@@ -12,8 +10,8 @@ namespace HotelServices.Controllers
     public class RoomController : Controller
     {
         private readonly IRoomService _roomService;
-        private readonly ILogger _logger;
-        public RoomController(IRoomService roomService, ILogger logger)
+        private readonly ILogger<RoomController> _logger;
+        public RoomController(IRoomService roomService, ILogger<RoomController> logger)
         {
             _roomService = roomService;
             _logger = logger;
