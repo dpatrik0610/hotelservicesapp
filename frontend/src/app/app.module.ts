@@ -12,7 +12,11 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HeaderComponent } from './header/header.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withFetch,
+} from '@angular/common/http';
 
 //PrimeNG modules
 import { ButtonModule } from 'primeng/button';
@@ -39,7 +43,7 @@ import { ScrollTopModule } from 'primeng/scrolltop';
     BrowserAnimationsModule,
     HttpClientModule,
   ],
-  providers: [provideClientHydration()],
+  providers: [provideClientHydration(), provideHttpClient(withFetch())],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
