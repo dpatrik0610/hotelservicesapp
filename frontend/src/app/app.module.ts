@@ -17,12 +17,14 @@ import {
   provideHttpClient,
   withFetch,
 } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 //PrimeNG modules
 import { ButtonModule } from 'primeng/button';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { InputTextModule } from 'primeng/inputtext';
 import { ScrollTopModule } from 'primeng/scrolltop';
+import { PasswordModule } from 'primeng/password';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { ScrollTopModule } from 'primeng/scrolltop';
     ScrollTopModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
+    PasswordModule,
   ],
   providers: [provideClientHydration(), provideHttpClient(withFetch())],
   bootstrap: [AppComponent],

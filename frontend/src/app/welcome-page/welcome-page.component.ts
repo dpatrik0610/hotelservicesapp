@@ -13,19 +13,10 @@ export class WelcomePageComponent implements OnInit {
   constructor(private dataStorage: DataStorageService) {}
 
   ngOnInit() {
-    this.getRoomsSubscription = this.dataStorage
-      .getRooms()
-      .pipe(
-        timeout(5000) // Set timeout to 5 seconds (adjust as needed)
-      )
-      .subscribe(
-        (data) => {
-          console.log(data);
-        },
-        (error) => {
-          // Handle timeout error
-          console.error('Request timed out:', error);
-        }
-      );
+    // this.getRoomsSubscription = this.dataStorage
+    //   .getRooms()
+    //   .subscribe((data) => {
+    //     console.log(data);
+    //   });
   }
 }
