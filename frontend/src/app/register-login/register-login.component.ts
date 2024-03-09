@@ -20,5 +20,6 @@ export class RegisterLoginComponent {
 
   onLogin() {
     console.log(this.loginForm.value);
+    this.loginForm.reset();
   }
 }
