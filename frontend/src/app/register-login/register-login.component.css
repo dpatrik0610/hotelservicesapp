@@ -1,13 +1,14 @@
 :root{
-  --input-box-max-width: 99px;
+  --input-box-max-width: 1000px;
 }
 
 .container .row-cols-1{
   min-height: calc(50vh - 10px);
   min-width: 50vh;
   text-align: center;
-  font-family: 'Cedarville Cursive';
-  background-color: hsla(0, 0%, 0%, 0.418);
+  font-family: "Inter var", sans-serif;
+  background-color: hsla(0, 0%, 0%, 0.4);
+  backdrop-filter: blur(10px);
 }
 
 p-password{
@@ -21,8 +22,6 @@ input{
 .login{
   text-shadow: 2px 2px 5px #000000;
   font-size: 2rem;
-}
-
-.form-floating{
-  margin: 10px;
+  font-style: italic;
+  color: wheat;
 }

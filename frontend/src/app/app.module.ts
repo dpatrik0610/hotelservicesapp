@@ -17,7 +17,7 @@ import {
   provideHttpClient,
   withFetch,
 } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //PrimeNG modules
 import { ButtonModule } from 'primeng/button';
@@ -46,6 +46,7 @@ import { PasswordModule } from 'primeng/password';
     HttpClientModule,
     FormsModule,
     PasswordModule,
+    ReactiveFormsModule,
   ],
   providers: [provideClientHydration(), provideHttpClient(withFetch())],
   bootstrap: [AppComponent],

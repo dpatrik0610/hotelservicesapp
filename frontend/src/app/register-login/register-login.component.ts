@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-register-login',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class RegisterLoginComponent {
   passwordValue = '';
+
+  loginForm: FormGroup = new FormGroup({});
+
+  ngOnInit() {
+    this.loginForm = new FormGroup({
+      username: new FormControl(null),
+      password: new FormControl(null),
+    });
+  }
+
+  onLogin() {
+    console.log(this.loginForm.value);
+  }
 }
