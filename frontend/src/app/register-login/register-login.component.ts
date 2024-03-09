@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register-login',
@@ -13,8 +13,8 @@ export class RegisterLoginComponent {
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      username: new FormControl(null),
-      password: new FormControl(null),
+      username: new FormControl(null, Validators.required),
+      password: new FormControl(null, Validators.required),
     });
   }
 

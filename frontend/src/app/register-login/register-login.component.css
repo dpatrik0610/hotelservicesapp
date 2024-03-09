@@ -13,10 +13,12 @@
 
 p-password{
   min-width: var(--input-box-max-width);
+  position : relative;
 }
 
 input{
   min-width: var(--input-box-max-width);
+  position : relative;
 }
 
 .login{
@@ -24,4 +26,11 @@ input{
   font-size: 2rem;
   font-style: italic;
   color: wheat;
+  position: relative;
+}
+
+.credential-helper{
+  color: red;
+  font-style: italic;
+  position: absolute;
 }
