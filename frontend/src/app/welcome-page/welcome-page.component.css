@@ -1,0 +1,15 @@
+div{
+  min-height: 70vh;
+  color: white;
+  text-shadow: 2px 2px 5px #000000;
+  font-family: "Inter var", sans-serif;
+}
+
+.gyobos{
+  font-family: 'Cedarville Cursive';
+  display: inline;
+}
+
+h1{
+ font-size: 5vw;
+}
