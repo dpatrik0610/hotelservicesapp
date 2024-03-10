@@ -51,7 +51,13 @@
         </div>
         <div class="row py-3 d-flex justify-content-center align-items-center">
           <div class="col-3">
-            <button class="btn btn-success w-100" type="submit">Log in</button>
+            <button
+              class="btn btn-success w-100"
+              [ngClass]="{ disabled: loginForm.invalid }"
+              type="submit"
+            >
+              Log in
+            </button>
           </div>
           <div class="col-3">
             <button class="btn btn-secondary w-100">Signup</button>
