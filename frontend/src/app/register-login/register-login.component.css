@@ -1,10 +1,10 @@
 :root{
-  --input-box-max-width: 1000px;
+
 }
 
 .container .row-cols-1{
   min-height: calc(50vh - 10px);
-  min-width: 50vh;
+  min-width: 40vh;
   text-align: center;
   font-family: "Inter var", sans-serif;
   background-color: hsla(0, 0%, 0%, 0.4);
@@ -12,12 +12,10 @@
 }
 
 p-password{
-  min-width: var(--input-box-max-width);
   position : relative;
 }
 
 input{
-  min-width: var(--input-box-max-width);
   position : relative;
 }
 
