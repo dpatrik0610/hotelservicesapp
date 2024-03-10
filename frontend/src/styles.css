@@ -4,6 +4,7 @@ body {
   background-image: url(./assets/img/luxury-bg.jpg);
   background-size: cover;
   max-height: 100vh;
+  background-attachment: fixed;
 }
 
 .noscrollbar::-webkit-scrollbar {
