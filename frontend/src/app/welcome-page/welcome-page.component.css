@@ -4,6 +4,7 @@
   text-shadow: 2px 2px 5px #000000;
   font-family: "Inter var", sans-serif;
   user-select: none;
+  animation: comeup 1s ease;
 }
 
 .gyobos{
@@ -13,4 +14,13 @@
 
 h1{
  font-size: 5vw;
+}
+
+@keyframes comeup{
+  0% {
+    transform: translateY(10%);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
