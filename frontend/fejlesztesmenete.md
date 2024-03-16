@@ -46,3 +46,6 @@ a végén a backenddel fog együttdolgozni.
 - A felület tartalmaz két validátort, melynek nincs más elvárása, mint az, hogy egyik box (username és password) se legyen üres, hiszen máskülönben a felhasználónak nem lesz lehetősége bejelentkezni, valamint ezen túl több validátort Informatikai Biztonági okokból sincs értelme hozzáadni
 - Amennyiben a validátoroknak nem felel meg a látogató, a bejelentkezés gomb kikapcsolt állapotban van
 - Amennyiben a felhasználó megérinti a két inputot, valamint nem felel meg a validátoroknak a bemenet, abban az esetben megjelenik egy kisegítő dialógus a doboz tetején a nagy Login felirat fölött, hogy a megfelelő inputot adja meg a dobozokba, ezen felül a piros keretet kapnak a hibás inputok. Ennek oka, hogy tájékoztatást kapjon a felhasználó arról, hogy miért nem tud bejelentkezni.
+
+## A page scroller
+- Az alkalmazás minden routeján elhelyeztem egy top-scrollert, amelyet a PrimeNG szolgáltat. A problémám vele az volt, hogy nem kör alakú volt, így a szem számára nehezen feldolgozható volt maga az objektum, valamint nem volt elég elegáns. A megoldást nehezen találtam meg, hiszen a 'p-scrolltop' tag elég különlegesen működik, de szerencsére mire megtaláltam, hogy hol kell módosítani ahhoz, hogy kör alakú legyen a gomb maga.
