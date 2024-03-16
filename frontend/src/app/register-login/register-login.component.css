@@ -1,7 +1,3 @@
-:root{
-
-}
-
 .container .row-cols-1{
   min-height: calc(50vh - 10px);
   min-width: 40vh;
@@ -25,10 +21,12 @@ input{
   font-style: italic;
   color: wheat;
   position: relative;
+  user-select: none;
 }
 
 .credential-helper{
   color: red;
   font-style: italic;
   position: absolute;
+  user-select: none;
 }
