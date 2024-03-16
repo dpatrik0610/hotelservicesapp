@@ -15,3 +15,7 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+p-scrolltop button{
+  border-radius: 50%;
+}
