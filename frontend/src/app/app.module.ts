@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import {
   BrowserModule,
+  HammerModule,
   provideClientHydration,
 } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,6 +50,7 @@ import { ImageSliderComponent } from './welcome-page/image-slider/image-slider.c
     FormsModule,
     PasswordModule,
     ReactiveFormsModule,
+    HammerModule,
   ],
   providers: [provideClientHydration(), provideHttpClient(withFetch())],
   bootstrap: [AppComponent],
