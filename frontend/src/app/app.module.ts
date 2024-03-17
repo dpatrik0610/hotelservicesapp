@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import {
   BrowserModule,
+  HammerModule,
   provideClientHydration,
 } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +26,7 @@ import { AutoFocusModule } from 'primeng/autofocus';
 import { InputTextModule } from 'primeng/inputtext';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { PasswordModule } from 'primeng/password';
+import { ImageSliderComponent } from './welcome-page/image-slider/image-slider.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { PasswordModule } from 'primeng/password';
     ContactUsComponent,
     HeaderComponent,
     RegisterLoginComponent,
+    ImageSliderComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,7 @@ import { PasswordModule } from 'primeng/password';
     FormsModule,
     PasswordModule,
     ReactiveFormsModule,
+    HammerModule,
   ],
   providers: [provideClientHydration(), provideHttpClient(withFetch())],
   bootstrap: [AppComponent],
