@@ -1,15 +1,17 @@
 <app-header></app-header>
 <div class="welcome d-flex justify-content-center align-items-center">
-  <h1 class="h-100">
+  <h1 class="h-100 welcome-message">
     Üdvözöljük a
     <p class="gyobos">Gyobos</p>
     -nál!
   </h1>
 </div>
 <div
-  class="d-flex justify-content-center align-items-center"
+  class="d-flex justify-content-center align-items-center flex-column"
   style="width: 100vw; height: 100vh"
 >
+  <div class="text-white p-3" style="user-select: none"><h1>Szobáink:</h1></div>
+
   <app-image-slider
     style="height: 400px; width: 600px"
     [images]="images"
