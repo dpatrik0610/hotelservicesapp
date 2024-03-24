@@ -25,3 +25,13 @@
   transition: 0.2s linear;
   top: -50px;
 }
+
+.navbar-collapse{
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px){
+  .container{
+    justify-content: space-around;
+  }
+}
