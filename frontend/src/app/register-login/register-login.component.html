@@ -6,18 +6,31 @@
     <div
       class="col py-3 login d-flex align-items-center justify-content-center"
     >
-      Login
+      <span *ngIf="isLoginPage">Login</span>
+      <span *ngIf="!isLoginPage">Signup</span>
     </div>
     <span
       *ngIf="
         loginForm.get('username')?.touched &&
         loginForm.get('username')?.invalid &&
         loginForm.get('password')?.touched &&
-        loginForm.get('password')?.invalid
+        loginForm.get('password')?.invalid &&
+        !isLoginPage
       "
       class="credential-helper py-3"
       >Please enter your credentials!</span
     >
+    <!-- <span
+      *ngIf="
+        loginForm.contains('passwodAgain') &&
+        loginForm.get('password')?.touched &&
+        loginForm.get('password')?.invalid &&
+        loginForm.get('passwordAgain')?.touched &&
+        loginForm.get('passwordAgain')?.invalid
+      "
+      class="credential-helper py-3"
+      >Your given passwords cannot be different!</span
+    > -->
     <div>
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <div class="form-group">
@@ -38,10 +51,24 @@
         <div class="form-group my-3">
           <p-password
             [toggleMask]="true"
-            [feedback]="false"
+            [feedback]="isLoginPage ? false : true"
             id="password"
             formControlName="password"
             placeholder="Password"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                loginForm.get('password')?.touched &&
+                loginForm.get('password')?.invalid
+            }"
+          ></p-password>
+        </div>
+        <div *ngIf="!isLoginPage" class="form-group my-3">
+          <p-password
+            [toggleMask]="true"
+            [feedback]="isLoginPage ? false : true"
+            id="passwordAgain"
+            formControlName="passwordAgain"
+            placeholder="Password again"
             [ngClass]="{
               'ng-invalid ng-dirty':
                 loginForm.get('password')?.touched &&
@@ -60,7 +87,13 @@
             </button>
           </div>
           <div class="col-3">
-            <button class="btn btn-secondary">Signup</button>
+            <button
+              (click)="onSignup()"
+              class="btn btn-secondary"
+              [ngClass]="{ disabled: loginForm.invalid && !isLoginPage }"
+            >
+              Signup
+            </button>
           </div>
         </div>
         <div class="col">
