@@ -1,0 +1,32 @@
+.container .row-cols-1{
+  min-height: calc(50vh - 10px);
+  min-width: 40vh;
+  text-align: center;
+  font-family: "Inter var", sans-serif;
+  background-color: hsla(0, 0%, 0%, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+p-password{
+  position : relative;
+}
+
+input{
+  position : relative;
+}
+
+.login{
+  text-shadow: 2px 2px 5px #000000;
+  font-size: 2rem;
+  font-style: italic;
+  color: wheat;
+  position: relative;
+  user-select: none;
+}
+
+.credential-helper{
+  color: red;
+  font-style: italic;
+  position: absolute;
+  user-select: none;
+}

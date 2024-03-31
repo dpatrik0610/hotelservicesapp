@@ -1,4 +1,72 @@
 <app-header></app-header>
-<div class="container h-100 d-flex align-items-center justify-content-center">
-  <div class="row">Megmondtam</div>
+<div
+  class="container h-100 d-flex align-items-center justify-content-center p-5"
+>
+  <div class="row row-cols-1 rounded border border-dark">
+    <div
+      class="col py-3 login d-flex align-items-center justify-content-center"
+    >
+      Login
+    </div>
+    <span
+      *ngIf="
+        loginForm.get('username')?.touched &&
+        loginForm.get('username')?.invalid &&
+        loginForm.get('password')?.touched &&
+        loginForm.get('password')?.invalid
+      "
+      class="credential-helper py-3"
+      >Please enter your credentials!</span
+    >
+    <div>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <input
+            pInputText
+            type="text"
+            size="23"
+            id="username"
+            formControlName="username"
+            placeholder="Username"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                loginForm.get('username')?.touched &&
+                loginForm.get('username')?.invalid
+            }"
+          />
+        </div>
+        <div class="form-group my-3">
+          <p-password
+            [toggleMask]="true"
+            [feedback]="false"
+            id="password"
+            formControlName="password"
+            placeholder="Password"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                loginForm.get('password')?.touched &&
+                loginForm.get('password')?.invalid
+            }"
+          ></p-password>
+        </div>
+        <div class="row py-3 d-flex justify-content-center align-items-center">
+          <div class="col-3">
+            <button
+              class="btn btn-success"
+              [ngClass]="{ disabled: loginForm.invalid }"
+              type="submit"
+            >
+              Log in
+            </button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-secondary">Signup</button>
+          </div>
+        </div>
+        <div class="col">
+          <a routerLink="/home">Forgot Password?</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

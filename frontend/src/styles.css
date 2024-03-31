@@ -4,7 +4,7 @@ body {
   background-image: url(./assets/img/luxury-bg.jpg);
   background-size: cover;
   max-height: 100vh;
-  color: red;
+  background-attachment: fixed;
 }
 
 .noscrollbar::-webkit-scrollbar {
@@ -14,4 +14,8 @@ body {
 .noscrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+p-scrolltop button{
+  border-radius: 50%;
 }

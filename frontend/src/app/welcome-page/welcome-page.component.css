@@ -1,0 +1,31 @@
+.welcome{
+  min-height: 100vh;
+  color: white;
+  text-shadow: 2px 2px 5px #000000;
+  font-family: "Inter var", sans-serif;
+  user-select: none;
+}
+
+.gyobos{
+  font-family: 'Cedarville Cursive';
+  display: inline;
+}
+
+.fullheight{
+  height: 100vh;
+}
+
+.welcome-message{
+ font-size: 5vw;
+ transform: translateY(50%);
+ animation: comeup 1s ease 0.2s forwards;
+}
+
+@keyframes comeup{
+  0% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

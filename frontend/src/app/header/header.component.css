@@ -1,3 +1,7 @@
+*{
+  z-index: 1000;
+}
+
 .navbar-brand{
     font-size: 2rem;
     font-family: 'Cedarville Cursive';
@@ -20,4 +24,14 @@
   position: static;
   transition: 0.2s linear;
   top: -50px;
+}
+
+.navbar-collapse{
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px){
+  .container{
+    justify-content: space-around;
+  }
 }
