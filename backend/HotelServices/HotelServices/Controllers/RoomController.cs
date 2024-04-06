@@ -35,6 +35,26 @@ namespace HotelServices.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult<IEnumerable<Room>>> GetRooms(IEnumerable<int> roomNumbers)
+        {
+            try
+            {
+                var rooms = await _roomService.GetRoomsByNumbersAsync(roomNumbers.ToList());
+                if (rooms == null || !rooms.Any())
+                {
+                    return NotFound();
+                }
+
+                return Ok(rooms);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occurred while retrieving the rooms: {0}", ex);
+                return StatusCode(500, "An error occurred while retrieving the rooms.");
+            }
+        }
+
+        [HttpGet]
         public async Task<ActionResult<List<Room>>> GetAllRooms()
         {
             try
@@ -79,6 +99,28 @@ namespace HotelServices.Controllers
             {
                 _logger.LogError("An error occurred while adding the room: {0}", ex);
                 return StatusCode(500, "An error occurred while adding the room.");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<Room>>> AddRooms(List<Room> rooms)
+        {
+            try
+            {
+                var existingRooms = await _roomService.GetRoomsByNumbersAsync(rooms.Select(r => r.RoomNumber).ToList());
+                if (existingRooms.Any())
+                {
+                    var existingRoomNumbers = existingRooms.Select(r => r.RoomNumber);
+                    return StatusCode(403, $"Rooms already exist with the following numbers: {string.Join(", ", existingRoomNumbers)}");
+                }
+
+                await _roomService.AddRoomsAsync(rooms);
+                return CreatedAtAction(nameof(GetRooms), new { roomNumbers = rooms.Select(r => r.RoomNumber) }, rooms);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occurred while adding the rooms: {0}", ex);
+                return StatusCode(500, "An error occurred while adding the rooms.");
             }
         }
 
