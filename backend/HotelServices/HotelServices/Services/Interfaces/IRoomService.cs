@@ -12,5 +12,7 @@ namespace HotelServices.Services.Interfaces
         Task AddRoomsAsync(List<Room> rooms);
         Task<bool> UpdateRoomAsync(int roomNumber, Room room);
         Task<bool> DeleteRoomAsync(int roomNumber);
+        Task<bool> CheckRoomExistsAsync(int roomNumber);
+        Task<List<bool>> CheckRoomsExistAsync(List<int> roomNumbers);
     }
 }

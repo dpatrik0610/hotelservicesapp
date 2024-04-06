@@ -2,6 +2,10 @@
 using HotelServices.Models;
 using HotelServices.Services.Interfaces;
 using HotelServices.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HotelServices.Controllers
 {
@@ -11,6 +15,7 @@ namespace HotelServices.Controllers
     {
         private readonly IRoomService _roomService;
         private readonly ILogger<RoomController> _logger;
+
         public RoomController(IRoomService roomService, ILogger<RoomController> logger)
         {
             _roomService = roomService;
@@ -94,8 +99,13 @@ namespace HotelServices.Controllers
         {
             try
             {
-                var roomExist = await _roomService.GetRoomByNumberAsync(room.RoomNumber);
-                if (roomExist != null) return StatusCode(403, "Room already exists by this number.");
+                if (room == null)
+                {
+                    throw new ArgumentNullException(nameof(room), "Room object cannot be null.");
+                }
+
+                var roomExist = await _roomService.CheckRoomExistsAsync(room.RoomNumber);
+                if (roomExist) return StatusCode(403, "Room already exists by this number.");
 
                 await _roomService.AddRoomAsync(room);
                 return CreatedAtAction(nameof(GetRoom), new { roomNumber = room.RoomNumber }, room);
@@ -112,9 +122,16 @@ namespace HotelServices.Controllers
         {
             try
             {
-                var existingRooms = await _roomService.GetRoomsByNumbersAsync(rooms.Select(r => r.RoomNumber).ToList());
-                if (existingRooms.Any())
+                if (rooms == null || rooms.Count == 0)
                 {
+                    throw new ArgumentException("List of rooms cannot be null or empty.", nameof(rooms));
+                }
+
+                var roomNumbers = rooms.Select(r => r.RoomNumber).ToList();
+                var checkRoomsExists = await _roomService.CheckRoomsExistAsync(roomNumbers);
+                if (checkRoomsExists.Any(r => r))
+                {
+                    var existingRooms = await _roomService.GetRoomsByNumbersAsync(roomNumbers);
                     var existingRoomNumbers = existingRooms.Select(r => r.RoomNumber);
                     return StatusCode(403, $"Rooms already exist with the following numbers: {string.Join(", ", existingRoomNumbers)}");
                 }

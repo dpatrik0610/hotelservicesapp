@@ -102,7 +102,6 @@ namespace HotelServices.Services
         {
             try
             {
-
                 var tasks = roomNumbers.Select(async roomNumber =>
                 {
                     return await _roomCollection.Find(room => room.RoomNumber == roomNumber).FirstOrDefaultAsync();
@@ -122,27 +121,45 @@ namespace HotelServices.Services
         public async Task AddRoomsAsync(List<Room> rooms)
         {
             try { 
-                var existingRoomNumbers = await _roomCollection
-                    .Find(room => rooms.Select(r => r.RoomNumber).Contains(room.RoomNumber))
-                    .Project(room => room.RoomNumber)
-                    .ToListAsync();
-
-                if (existingRoomNumbers.Any())
-                {
-                    throw new InvalidOperationException($"Rooms already exist with the following room numbers: {string.Join(", ", existingRoomNumbers)}");
-                }
-
                 await _roomCollection.InsertManyAsync(rooms);
-            }
-            catch (InvalidOperationException ex)
-            {
-                _logger.LogError(ex.Message);
-                throw new InvalidOperationException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while Adding rooms.");
                 throw new Exception("An error occurred while Adding rooms.");
+            }
+        }
+
+        public async Task<bool> CheckRoomExistsAsync(int roomNumber)
+        {
+            try
+            {
+                var room = await _roomCollection.Find(r => r.RoomNumber == roomNumber).FirstOrDefaultAsync();
+                return room != null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while checking if the room exists.");
+                throw new Exception("An error occurred while checking if the room exists.", ex);
+            }
+        }
+
+        public async Task<List<bool>> CheckRoomsExistAsync(List<int> roomNumbers)
+        {
+            try
+            {
+                var results = new List<bool>();
+                foreach (var roomNumber in roomNumbers)
+                {
+                    var roomExists = await CheckRoomExistsAsync(roomNumber);
+                    results.Add(roomExists);
+                }
+                return results;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while checking if the rooms exist.");
+                throw new Exception("An error occurred while checking if the rooms exist.", ex);
             }
         }
     }
