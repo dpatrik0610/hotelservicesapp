@@ -89,19 +89,18 @@ namespace HotelServices.Controllers
             }
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<ActionResult<Room>> AddRoom(Room room)
         {
             try
             {
-                _logger.LogInformation($"Request Body: {System.Text.Json.JsonSerializer.Serialize(room)}");
-                if (room == null)
+                if (room == null || room.RoomNumber == 0)
                 {
                     return BadRequest("Room object cannot be null.");
                 }
 
-                var roomExist = await _roomService.CheckRoomExistsAsync(room.RoomNumber);
-                if (roomExist) return StatusCode(403, "Room already exists by this number.");
+                var roomExist = await _roomService.GetRoomByNumberAsync(room.RoomNumber);
+                if (roomExist != null) return StatusCode(403, "Room already exists by this number.");
 
                 await _roomService.AddRoomAsync(room);
                 _logger.LogInformation($"Added Room: {System.Text.Json.JsonSerializer.Serialize(room)}");
