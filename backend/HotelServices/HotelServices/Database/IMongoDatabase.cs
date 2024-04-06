@@ -23,7 +23,8 @@ namespace HotelServices.Database
                 throw new ArgumentException("Connection string or database name cannot be null or empty.");
             }
 
-            _client = new MongoClient(connectionString);
+            var settings = MongoClientSettings.FromConnectionString(connectionString);
+            _client = new MongoClient(settings);
             _databaseName = databaseName;
             _logger = logger;
         }
@@ -40,9 +41,9 @@ namespace HotelServices.Database
 
                     return _client.GetDatabase(_databaseName);
                 }
-                catch (MongoException ex)
+                catch
                 {
-                    _logger.LogError(ex, $"Failed to connect to the MongoDB server. Retry attempt {attempt + 1}/{maxRetryAttempts}.");
+                    _logger.LogError($"Failed to connect to the MongoDB server. Retry attempt {attempt + 1}/{maxRetryAttempts}.");
                     attempt++;
                     if (attempt < maxRetryAttempts)
                     {
