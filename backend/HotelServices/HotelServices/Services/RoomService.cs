@@ -13,7 +13,7 @@ namespace HotelServices.Services
 
         public RoomService(IMongoDatabaseProvider databaseProvider, ILogger<RoomService> logger)
         {
-            var database = databaseProvider.GetDatabase();
+            var database = databaseProvider.GetDatabase(maxRetryAttempts: 3);
             _roomCollection = database.GetCollection<Room>("Rooms");
             _logger = logger;
         }

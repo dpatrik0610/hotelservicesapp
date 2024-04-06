@@ -1,17 +1,22 @@
-﻿using MongoDB.Driver;
+﻿using System;
+using System.Threading.Tasks;
+using MongoDB.Driver;
+using Microsoft.Extensions.Logging;
 
 namespace HotelServices.Database
 {
     public interface IMongoDatabaseProvider
     {
-        IMongoDatabase GetDatabase();
+        IMongoDatabase GetDatabase(int maxRetryAttempts);
     }
 
     public class MongoDatabaseProvider : IMongoDatabaseProvider
     {
         private readonly IMongoClient _client;
         private readonly string _databaseName;
-        public MongoDatabaseProvider(string connectionString, string databaseName)
+        private readonly ILogger _logger;
+
+        public MongoDatabaseProvider(string connectionString, string databaseName, ILogger logger)
         {
             if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(databaseName))
             {
@@ -20,22 +25,35 @@ namespace HotelServices.Database
 
             _client = new MongoClient(connectionString);
             _databaseName = databaseName;
+            _logger = logger;
         }
 
-        public IMongoDatabase GetDatabase()
+        public IMongoDatabase GetDatabase(int maxRetryAttempts)
         {
-            try
+            int attempt = 0;
+            while (attempt < maxRetryAttempts)
             {
-                // Check if the MongoDB server is reachable
-                _client.ListDatabaseNames();
+                try
+                {
+                    // Check if the MongoDB server is reachable
+                    _client.ListDatabaseNames();
 
-                return _client.GetDatabase(_databaseName);
+                    return _client.GetDatabase(_databaseName);
+                }
+                catch (MongoException ex)
+                {
+                    _logger.LogError(ex, $"Failed to connect to the MongoDB server. Retry attempt {attempt + 1}/{maxRetryAttempts}.");
+                    attempt++;
+                    if (attempt < maxRetryAttempts)
+                    {
+                        // Delay for 5 seconds
+                        Task.Delay(5000).Wait();
+                    }
+                }
             }
-            catch (MongoException ex)
-            {
-                // TODO: Implement log here.
-                throw new Exception("Failed to connect to the MongoDB server.", ex);
-            }
+
+            _logger.LogError($"Failed to connect to the MongoDB server after {maxRetryAttempts} attempts.");
+            throw new Exception($"Failed to connect to the MongoDB server after {maxRetryAttempts} attempts.");
         }
     }
 }
