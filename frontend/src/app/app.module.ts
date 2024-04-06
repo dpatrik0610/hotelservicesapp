@@ -27,6 +27,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { PasswordModule } from 'primeng/password';
 import { ImageSliderComponent } from './welcome-page/image-slider/image-slider.component';
+import { RoomsComponent } from './rooms/rooms.component';
+import { RoomComponent } from './rooms/room/room.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { ImageSliderComponent } from './welcome-page/image-slider/image-slider.c
     HeaderComponent,
     RegisterLoginComponent,
     ImageSliderComponent,
+    RoomsComponent,
+    RoomComponent,
   ],
   imports: [
     BrowserModule,
