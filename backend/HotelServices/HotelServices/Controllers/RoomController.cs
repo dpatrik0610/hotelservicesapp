@@ -34,7 +34,7 @@ namespace HotelServices.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("byNumbers")]
         public async Task<ActionResult<IEnumerable<Room>>> GetRooms(IEnumerable<int> roomNumbers)
         {
             try
@@ -54,12 +54,17 @@ namespace HotelServices.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<ActionResult<List<Room>>> GetAllRooms()
         {
             try
             {
                 var rooms = await _roomService.GetAllRoomsAsync();
+                if (rooms == null || !rooms.Any())
+                {
+                    return NotFound();
+                }
+
                 return rooms;
             }
             catch (Exception ex)
@@ -84,7 +89,7 @@ namespace HotelServices.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<ActionResult<Room>> AddRoom(Room room)
         {
             try
@@ -102,7 +107,7 @@ namespace HotelServices.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("addMany")]
         public async Task<ActionResult<IEnumerable<Room>>> AddRooms(List<Room> rooms)
         {
             try
