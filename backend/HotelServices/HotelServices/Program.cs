@@ -1,5 +1,4 @@
 using HotelServices.Database;
-
 using HotelServices.Services.Interfaces;
 using HotelServices.Services;
 
@@ -15,13 +14,14 @@ if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(databaseName)
 }
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.MongoDB(connectionString, collectionName: "Hotel_Logfiles")
+    .WriteTo.MongoDB(connectionString, collectionName: "Logs")
+    .WriteTo.Console()
     .CreateLogger();
 
 builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
     try
     {
-        return new MongoDatabaseProvider(connectionString, databaseName);
+        return new MongoDatabaseProvider(connectionString, databaseName, provider.GetRequiredService<ILogger<MongoDatabaseProvider>>());
     }
     catch (Exception ex)
     {
@@ -32,6 +32,17 @@ builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
 builder.Services.AddSingleton<IRoomService, RoomService>();
 builder.Services.AddControllers();
 
+// Add CORS service
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -47,6 +58,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAllOrigins"); // Configure CORS middleware
 
 app.UseAuthorization();
 
