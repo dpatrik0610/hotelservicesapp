@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HotelServices.Models;
 using HotelServices.Services.Interfaces;
-using HotelServices.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HotelServices.Controllers
 {
@@ -99,15 +94,17 @@ namespace HotelServices.Controllers
         {
             try
             {
+                _logger.LogInformation($"Request Body: {System.Text.Json.JsonSerializer.Serialize(room)}");
                 if (room == null)
                 {
-                    throw new ArgumentNullException(nameof(room), "Room object cannot be null.");
+                    return BadRequest("Room object cannot be null.");
                 }
 
                 var roomExist = await _roomService.CheckRoomExistsAsync(room.RoomNumber);
                 if (roomExist) return StatusCode(403, "Room already exists by this number.");
 
                 await _roomService.AddRoomAsync(room);
+                _logger.LogInformation($"Added Room: {System.Text.Json.JsonSerializer.Serialize(room)}");
                 return CreatedAtAction(nameof(GetRoom), new { roomNumber = room.RoomNumber }, room);
             }
             catch (Exception ex)
@@ -124,7 +121,8 @@ namespace HotelServices.Controllers
             {
                 if (rooms == null || rooms.Count == 0)
                 {
-                    throw new ArgumentException("List of rooms cannot be null or empty.", nameof(rooms));
+                    _logger.LogInformation($"Request Body: {System.Text.Json.JsonSerializer.Serialize(rooms)}");
+                    return BadRequest("List of rooms cannot be null or empty.");
                 }
 
                 var roomNumbers = rooms.Select(r => r.RoomNumber).ToList();
