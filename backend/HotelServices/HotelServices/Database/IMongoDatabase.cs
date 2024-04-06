@@ -45,11 +45,6 @@ namespace HotelServices.Database
                 {
                     _logger.LogError($"Failed to connect to the MongoDB server. Retry attempt {attempt + 1}/{maxRetryAttempts}.");
                     attempt++;
-                    if (attempt < maxRetryAttempts)
-                    {
-                        // Delay for 5 seconds
-                        Task.Delay(5000).Wait();
-                    }
                 }
             }
 
