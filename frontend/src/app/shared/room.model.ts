@@ -5,8 +5,8 @@ export class Room {
     public price: number,
     public roomType: string,
     public description: string,
-    public amenities: [string],
-    public images: [string],
+    public amenities: string[],
+    public images: string[],
     public id?: number
   ) {}
 }

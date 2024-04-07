@@ -12,13 +12,7 @@
       *ngFor="let room of rooms"
       class="col-xs-12 col-md-6 col-lg-4 col-xxl-3 p-3"
     >
-      <div
-        class="h-100"
-        [ngClass]="{
-          blurred: room !== hoveredItem && hoveredItem,
-          unblurred: room === hoveredItem || !hoveredItem
-        }"
-      >
+      <div class="h-100">
         <img
           src="{{ room.images[0] }}"
           (click)="onSetRoom(room)"
