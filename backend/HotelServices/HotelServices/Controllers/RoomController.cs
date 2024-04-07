@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using HotelServices.Models;
+using HotelServices.Shared.Models;
 using HotelServices.Services.Interfaces;
 
 namespace HotelServices.Controllers

@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using System.ComponentModel.DataAnnotations;
 
-namespace HotelServices.Models
+namespace HotelServices.Shared.Models
 {
     public class User
     {

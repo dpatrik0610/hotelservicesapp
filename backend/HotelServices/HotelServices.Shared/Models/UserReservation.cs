@@ -1,10 +1,8 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace HotelServices.Models
+namespace HotelServices.Shared.Models
 {
     public class UserReservation
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using HotelServices.Models;
+using HotelServices.Shared.Models;
 
 namespace HotelServices.Services.Interfaces
 {

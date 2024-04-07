@@ -1,5 +1,5 @@
 ﻿using HotelServices.Database;
-using HotelServices.Models;
+using HotelServices.Shared.Models;
 using HotelServices.Services.Interfaces;
 using MongoDB.Driver;
 

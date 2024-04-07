@@ -1,5 +1,5 @@
 ﻿using HotelServices.Database;
-using HotelServices.Models;
+using HotelServices.Shared.Models;
 using HotelServices.Services.Interfaces;
 using MongoDB.Driver;
 
@@ -15,6 +15,10 @@ namespace HotelServices.Services
             var database = databaseProvider.GetDatabase();
             _roomCollection = database.GetCollection<Room>("Rooms");
             _logger = logger;
+        }
+
+        public RoomService(IMongoCollection<Room> object1, ILogger<RoomService> object2)
+        {
         }
 
         public async Task<Room> GetRoomByNumberAsync(int roomNumber)
