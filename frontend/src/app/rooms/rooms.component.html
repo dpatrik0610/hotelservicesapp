@@ -2,3 +2,28 @@
 <div class="rooms d-flex justify-content-center align-items-center">
   <h1>Szobáink:</h1>
 </div>
+<div class="room-list container py-5">
+  <div class="row">
+    <div
+      *ngFor="let room of rooms"
+      class="col-xs-12 col-md-6 col-lg-4 col-xxl-3 p-3"
+    >
+      <div
+        class="h-100"
+        [ngClass]="{
+          blurred: room !== hoveredItem && hoveredItem,
+          unblurred: room === hoveredItem || !hoveredItem
+        }"
+      >
+        <img
+          src="{{ room.images[0] }}"
+          (click)="onSetRoom(room)"
+          class="card-img-top"
+          style="cursor: pointer"
+          alt="{{ room.roomType }}"
+          routerLink="flags"
+        />
+      </div>
+    </div>
+  </div>
+</div>

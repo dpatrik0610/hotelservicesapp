@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
+import { Room } from './room.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,10 @@ export class DataStorageService {
   constructor(private http: HttpClient) {}
 
   getRooms() {
-    return this.http.get(this.backendUrl + '/rooms');
+    return this.http.get<Room[]>(this.backendUrl + '/Room/all');
+  }
+
+  getRoom(id: number) {
+    return this.http.get<Room>(this.backendUrl + '/Room/' + id);
   }
 }

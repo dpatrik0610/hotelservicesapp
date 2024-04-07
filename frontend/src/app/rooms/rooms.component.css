@@ -10,6 +10,35 @@ h1{
   animation: comeup 1s ease 0.2s forwards;
 }
 
+.room-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  min-width: 100px;
+  min-height: 100px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.2);
+}
+
+.blurred {
+  animation: blurTimeout 0.3s ease-in-out forwards;
+}
+
+.unblurred {
+  animation: unblurTimeout 0.3s ease-in-out forwards;
+}
+
 @keyframes comeup{
   0% {
     transform: translateY(50%);

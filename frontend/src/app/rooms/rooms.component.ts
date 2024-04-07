@@ -1,16 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataStorageService } from '../shared/data-storage.service';
+import { Subscription } from 'rxjs';
+import { Room } from '../shared/room.model';
 
 @Component({
   selector: 'app-rooms',
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.css',
 })
-export class RoomsComponent implements OnInit {
+export class RoomsComponent implements OnInit, OnDestroy {
+  getRoomsSubscribtion = new Subscription();
+  getRoomSubscribtion = new Subscription();
+  hoveredItem?: Room | null;
+  rooms: Room[] = [];
+
   constructor(private http: DataStorageService) {}
   ngOnInit(): void {
-    this.http.getRooms().subscribe((data) => {
+    this.hoveredItem = null;
+    this.getRoomsSubscribtion = this.http.getRooms().subscribe((data) => {
+      // this.rooms = data;
       console.log(data);
     });
+
+    // this.getRoomSubscribtion = this.http.getRoom(101).subscribe((data) => {
+    //   console.log(data);
+    // });
+  }
+
+  onSetRoom(item: Room | null) {
+    this.hoveredItem = item;
+  }
+
+  ngOnDestroy(): void {
+    this.getRoomsSubscribtion.unsubscribe();
+    this.getRoomSubscribtion.unsubscribe();
   }
 }
