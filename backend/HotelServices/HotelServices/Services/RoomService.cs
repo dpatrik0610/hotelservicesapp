@@ -2,7 +2,6 @@
 using HotelServices.Models;
 using HotelServices.Services.Interfaces;
 using MongoDB.Driver;
-using System.Runtime.InteropServices;
 
 namespace HotelServices.Services
 {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using HotelServices.Database;
 using HotelServices.Models;
 using HotelServices.Services.Interfaces;
-using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
 namespace HotelServices.Services
@@ -13,9 +10,10 @@ namespace HotelServices.Services
         private readonly IMongoCollection<UserReservation> _userReservationCollection;
         private readonly ILogger<UserReservationService> _logger;
 
-        public UserReservationService(IMongoCollection<UserReservation> userReservationCollection, ILogger<UserReservationService> logger)
+        public UserReservationService(IMongoDatabaseProvider databaseProvider, ILogger<UserReservationService> logger)
         {
-            _userReservationCollection = userReservationCollection;
+            var database = databaseProvider.GetDatabase();
+            _userReservationCollection = database.GetCollection<UserReservation>("UserReservations");
             _logger = logger;
         }
 
