@@ -4,7 +4,8 @@ import { Room } from './room.model';
 @Injectable({
   providedIn: 'root',
 })
-export class CurrentRoomService {
+export class RoomService {
+  private _rooms: Room[] = [];
   private _currentRoom: Room = new Room(
     101,
     true,
@@ -18,8 +19,17 @@ export class CurrentRoomService {
   public get currentRoom(): Room {
     return this._currentRoom;
   }
+
+  public get rooms(): Room[] {
+    return this._rooms;
+  }
+
   public set currentRoom(value: Room) {
     this._currentRoom = value;
+  }
+
+  public set rooms(value: Room[]) {
+    this._rooms = value;
   }
 
   constructor() {}
