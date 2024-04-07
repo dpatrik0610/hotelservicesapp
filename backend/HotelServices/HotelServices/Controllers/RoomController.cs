@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using HotelServices.Models;
+using HotelServices.Shared.Models;
 using HotelServices.Services.Interfaces;
 
 namespace HotelServices.Controllers
@@ -90,7 +90,7 @@ namespace HotelServices.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Room>> AddRoom(Room room)
+        public async Task<ActionResult<Room>> AddRoom([FromBody] Room room)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace HotelServices.Controllers
         }
 
         [HttpPost("addMany")]
-        public async Task<ActionResult<IEnumerable<Room>>> AddRooms(List<Room> rooms)
+        public async Task<ActionResult<IEnumerable<Room>>> AddRooms([FromBody] List<Room> rooms)
         {
             try
             {
@@ -179,5 +179,23 @@ namespace HotelServices.Controllers
             }
         }
 
+        [HttpPut("switchAvailability/{roomNumber}")]
+        public async Task<IActionResult> SwitchRoomStatus(int roomNumber)
+        {
+            try
+            {
+                var room = await _roomService.GetRoomByNumberAsync(roomNumber);
+                if (room == null) return BadRequest();
+                room.Availability = !room.Availability;
+
+                await _roomService.UpdateRoomAsync(roomNumber, room);
+                return NoContent();
+            }
+            catch
+            {
+                _logger.LogError($"An error occured while changing room {roomNumber}'s availability.");
+                return StatusCode(500, $"An error occured while changing room {roomNumber}'s availability.");
+            }
+        }
     }
 }

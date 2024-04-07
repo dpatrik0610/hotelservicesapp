@@ -14,7 +14,6 @@ if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(databaseName)
 }
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.MongoDB(connectionString, collectionName: "Logs")
     .WriteTo.Console()
     .CreateLogger();
 

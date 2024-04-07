@@ -1,4 +1,4 @@
-﻿using HotelServices.Models;
+﻿using HotelServices.Shared.Models;
 
 namespace HotelServices.Services.Interfaces
 {
