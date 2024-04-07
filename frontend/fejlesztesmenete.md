@@ -54,3 +54,6 @@ a végén a backenddel fog együttdolgozni.
 - Szerettem volna egy olyan lehetőséget biztosítani a felhasználó számára, amelyet egyszerre kellemes használni, valamint eléggé elegánsnak tűnik, így egy 'HammerJS extension'-nel megvalósított image sliderre került a sor.
 - Maga a slider egyébként egy harmadik féltől származó logikával működik, hiszen az implementálása szempontjából nehezen érthető, valamint dizájn szempontjából sem lett volna magamtól időm, de összességében lehetőségem se azt implementálni.
 - Az ötlet, hogy az előző, valamint a következő kép is megjelenik a slideren, valamint szépen animálás közben a 'z-index' tulajdonság is változik egyaránt az 'opacity' tulajdonsággal. Ez vegyítve van a 'transform' tulajdonsággal és a 'scale' tulajdonsággal, hogy minél kielégítőbb élmény legyen végiglapozni a szolgáltatott szobákról készült képeken és minél meggyőzőbb legyen a felhasználó/látogató részére az
+
+## Szobáink fül
+- Hardcode adatok szerepelnek ahhoz, hogy a szobák kategóriáját meghatározzuk, mivel nem lesz bővítve hosszútávon.

@@ -12,7 +12,7 @@ export class DataStorageService {
   constructor(private http: HttpClient) {}
 
   getRooms() {
-    return this.http.get<Room[]>(this.backendUrl + '/Room/all');
+    return this.http.get<Room[]>(this.backendUrl + '/Room/available');
   }
 
   getRoom(id: number) {
