@@ -29,6 +29,7 @@ import { PasswordModule } from 'primeng/password';
 import { ImageSliderComponent } from './welcome-page/image-slider/image-slider.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { RoomComponent } from './rooms/room/room.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { RoomComponent } from './rooms/room/room.component';
     ImageSliderComponent,
     RoomsComponent,
     RoomComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,

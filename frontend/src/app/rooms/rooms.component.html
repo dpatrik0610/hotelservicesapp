@@ -2,6 +2,10 @@
 <div class="rooms d-flex justify-content-center align-items-center">
   <h1>Szobáink:</h1>
 </div>
+<app-loading-spinner
+  class="justify-content-center d-flex align-items-center"
+  *ngIf="isLoading"
+></app-loading-spinner>
 <div class="room-list container py-5">
   <div class="row">
     <div
