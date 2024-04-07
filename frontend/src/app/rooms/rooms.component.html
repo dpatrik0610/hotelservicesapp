@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="rooms d-flex justify-content-center align-items-center">
+<div class="rooms d-flex justify-content-center align-items-center py-5">
   <h1>Szobáink:</h1>
 </div>
 <app-loading-spinner
@@ -7,19 +7,19 @@
   *ngIf="isLoading"
 ></app-loading-spinner>
 <div class="room-list container py-5">
-  <div class="row">
+  <div class="row justify-content-center">
     <div
       *ngFor="let room of rooms"
       class="col-xs-12 col-md-6 col-lg-4 col-xxl-3 p-3"
     >
-      <div class="h-100">
+      <div class="h-100 d-flex justify-content-center align-items-center">
         <img
           src="{{ room.images[0] }}"
           (click)="onSetRoom(room)"
           class="card-img-top"
           style="cursor: pointer"
           alt="{{ room.roomType }}"
-          routerLink="flags"
+          routerLink="/room/{{ room.id }}"
         />
       </div>
     </div>

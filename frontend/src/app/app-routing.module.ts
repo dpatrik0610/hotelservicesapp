@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'header', component: HeaderComponent },
   { path: 'login', component: RegisterLoginComponent },
   { path: 'rooms', component: RoomsComponent },
+  { path: 'rooms/:id', component: RoomsComponent },
   { path: '**', redirectTo: '/home' },
 ];
 
