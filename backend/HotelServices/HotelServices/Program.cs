@@ -6,9 +6,8 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetValue<string>("MongoDB:ConnectionURI");
-var databaseName = builder.Configuration.GetValue<string>("MongoDB:DatabaseName");
 
-if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(databaseName))
+if (string.IsNullOrEmpty(connectionString))
 {
     throw new ApplicationException("MongoDB connection settings are missing or invalid.");
 }
@@ -20,7 +19,7 @@ Log.Logger = new LoggerConfiguration()
 builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
     try
     {
-        return new MongoDatabaseProvider(connectionString, databaseName, provider.GetRequiredService<ILogger<MongoDatabaseProvider>>());
+        return new MongoDatabaseProvider(connectionString);
     }
     catch (Exception ex)
     {
@@ -29,6 +28,9 @@ builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
 });
 
 builder.Services.AddSingleton<IRoomService, RoomService>();
+builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IUserReservationService, UserReservationService>();
+
 builder.Services.AddControllers();
 
 // Add CORS service

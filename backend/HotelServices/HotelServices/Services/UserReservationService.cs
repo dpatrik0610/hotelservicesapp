@@ -12,8 +12,7 @@ namespace HotelServices.Services
 
         public UserReservationService(IMongoDatabaseProvider databaseProvider, ILogger<UserReservationService> logger)
         {
-            var database = databaseProvider.GetDatabase();
-            _userReservationCollection = database.GetCollection<UserReservation>("UserReservations");
+            _userReservationCollection = databaseProvider.GetCollection<UserReservation>("UserReservations");
             _logger = logger;
         }
 

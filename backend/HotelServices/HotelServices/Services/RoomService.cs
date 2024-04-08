@@ -12,13 +12,8 @@ namespace HotelServices.Services
 
         public RoomService(IMongoDatabaseProvider databaseProvider, ILogger<RoomService> logger)
         {
-            var database = databaseProvider.GetDatabase();
-            _roomCollection = database.GetCollection<Room>("Rooms");
+            _roomCollection = databaseProvider.GetCollection<Room>("Rooms");
             _logger = logger;
-        }
-
-        public RoomService(IMongoCollection<Room> object1, ILogger<RoomService> object2)
-        {
         }
 
         public async Task<Room> GetRoomByNumberAsync(int roomNumber)
