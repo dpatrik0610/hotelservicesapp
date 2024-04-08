@@ -124,7 +124,7 @@ namespace HotelServices.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while Adding rooms.");
-                throw new Exception("An error occurred while Adding rooms.");
+                throw new Exception("An error occurred while Adding rooms: ", ex);
             }
         }
 
