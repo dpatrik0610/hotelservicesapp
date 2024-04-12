@@ -1,8 +1,9 @@
-﻿using MongoDB.Bson;
+﻿using HotelServices.Shared.Models.Enums;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace HotelServices.Models
+namespace HotelServices.Shared.Models
 {
     public class Room
     {

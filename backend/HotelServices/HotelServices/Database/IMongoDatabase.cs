@@ -7,7 +7,7 @@ namespace HotelServices.Database
 {
     public interface IMongoDatabaseProvider
     {
-        IMongoDatabase GetDatabase(int maxRetryAttempts);
+        IMongoDatabase GetDatabase();
     }
 
     public class MongoDatabaseProvider : IMongoDatabaseProvider
@@ -29,27 +29,22 @@ namespace HotelServices.Database
             _logger = logger;
         }
 
-        public IMongoDatabase GetDatabase(int maxRetryAttempts)
+        public IMongoDatabase GetDatabase()
         {
-            int attempt = 0;
-            while (attempt < maxRetryAttempts)
+            try
             {
-                try
-                {
-                    // Check if the MongoDB server is reachable
-                    _client.ListDatabaseNames();
+                // Check if the MongoDB server is reachable
+                _client.ListDatabaseNames();
 
-                    return _client.GetDatabase(_databaseName);
-                }
-                catch
-                {
-                    _logger.LogError($"Failed to connect to the MongoDB server. Retry attempt {attempt + 1}/{maxRetryAttempts}.");
-                    attempt++;
-                }
+                return _client.GetDatabase(_databaseName);
+            }
+            catch
+            {
+                _logger.LogError($"Failed to connect to the MongoDB server.");
             }
 
-            _logger.LogError($"Failed to connect to the MongoDB server after {maxRetryAttempts} attempts.");
-            throw new Exception($"Failed to connect to the MongoDB server after {maxRetryAttempts} attempts.");
+            _logger.LogError($"Failed to connect to the MongoDB server.");
+            throw new Exception($"Failed to connect to the MongoDB server.");
         }
     }
 }
