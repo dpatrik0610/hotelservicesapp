@@ -69,6 +69,12 @@ namespace Hotelservices.UserAuth.Controllers
             var roles = await _userManager.GetRolesAsync(applicationUser);
 
             var token = _jwtTokenGenerator.GenerateJwtToken(applicationUser.Id.ToString(), applicationUser.UserName, roles.ToList());
+            Response.Cookies.Append("AuthCookie", token, new CookieOptions
+            {
+                HttpOnly = true,
+                SameSite = SameSiteMode.None,
+                Secure = true
+            });
             return Ok(new { Token = token });
         }
 
@@ -110,6 +116,12 @@ namespace Hotelservices.UserAuth.Controllers
             }
 
             var token = _jwtTokenGenerator.GenerateJwtToken(applicationUser.Id.ToString(), applicationUser.UserName, new List<string>() { "None" });
+            Response.Cookies.Append("AuthCookie", token, new CookieOptions
+            {
+                HttpOnly = true,
+                SameSite = SameSiteMode.None,
+                Secure = true
+            });
             return Ok(new { Token = token });
         }
 
