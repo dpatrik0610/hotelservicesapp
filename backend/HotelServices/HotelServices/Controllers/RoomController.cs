@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HotelServices.Shared.Models;
 using HotelServices.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelServices.Controllers
 {
@@ -55,6 +56,7 @@ namespace HotelServices.Controllers
         }
 
         [HttpGet("all")]
+        [Authorize(Roles = ("admin") )]
         public async Task<ActionResult<List<Room>>> GetAllRooms()
         {
             try
