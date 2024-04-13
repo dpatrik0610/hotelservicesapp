@@ -1,15 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using MongoDB.Driver;
-using Microsoft.Extensions.Logging;
+﻿using MongoDB.Driver;
 
-namespace HotelServices.Database
+
+namespace HotelServices.Shared.Database
 {
-    public interface IMongoDatabaseProvider
-    {
-        IMongoCollection<T> GetCollection<T>(string collectionName);
-    }
-
     public class MongoDatabaseProvider : IMongoDatabaseProvider
     {
         private readonly IMongoClient _client;
