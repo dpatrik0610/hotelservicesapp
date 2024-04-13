@@ -56,7 +56,7 @@
         <div *ngIf="!isUserAuthenticated" class="navbar-text">
           <button
             (click)="onLog()"
-            routerLink="/login"
+            routerLink="/auth"
             class="btn btn-primary btn-lg"
             [ngClass]="isLoginPage ? 'disabled' : ''"
           >

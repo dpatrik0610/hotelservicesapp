@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
     this.isUserAuthenticated = this.user.isUserLoggedIn;
 
     this.route.url.subscribe((url) => {
-      this.isLoginPage = url[0].path === 'login';
+      this.isLoginPage = url[0].path === 'auth';
     });
   }
 
