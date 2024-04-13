@@ -23,7 +23,7 @@ namespace HotelServices.Shared.Models
 
         [Required(ErrorMessage = "Room type is required.")]
         [EnumDataType(typeof(RoomType), ErrorMessage = "Invalid room type.")]
-        public RoomType RoomType { get; set; }
+        public RoomType RoomType { get; set; } = RoomType.Standard;
 
         [MaxLength(100, ErrorMessage = "Description cannot exceed 100 characters.")]
         public string? Description { get; set; }
