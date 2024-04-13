@@ -12,7 +12,7 @@ namespace Hotelservices.UserAuth.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "ADMIN")]
     public class AdminController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -27,6 +27,19 @@ namespace Hotelservices.UserAuth.Controllers
         }
 
         // User CRUD Operations
+        [HttpGet("get-user/{userId}")]
+        [AllowAnonymous] // Allow access without authorization
+        public async Task<IActionResult> GetUser(string userId)
+        {
+            _logger.LogInformation($"Retrieving user with ID {userId}...");
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                _logger.LogWarning($"User with ID {userId} not found.");
+                return NotFound("User not found.");
+            }
+            return Ok(user);
+        }
 
         [HttpGet("get-users")]
         public IActionResult GetUsers()
