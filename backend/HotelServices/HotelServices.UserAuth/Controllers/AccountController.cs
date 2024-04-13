@@ -120,11 +120,13 @@ namespace Hotelservices.UserAuth.Controllers
             _logger.LogInformation("User logout.");
 
             var user = HttpContext.User.Identity.Name;
-            _logger.LogInformation($"User {user} logged out.");
 
+            if (!User.Identity.IsAuthenticated) return BadRequest(new { Message = "User is not logged in." });
+
+            // User is authenticated, proceed with logout
+            _logger.LogInformation($"User {user} logged out.");
             await _signInManager.SignOutAsync();
             var response = new { Message = "User logged out." };
-            _logger.LogInformation($"Logout response: {response}");
 
             return Ok(response);
         }
