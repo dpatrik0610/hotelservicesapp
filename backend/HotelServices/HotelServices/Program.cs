@@ -1,4 +1,4 @@
-using HotelServices.Database;
+using HotelServices.Shared.Database;
 using HotelServices.Services.Interfaces;
 using HotelServices.Services;
 
@@ -27,9 +27,14 @@ builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
     }
 });
 
+// Adding Services
 builder.Services.AddSingleton<IRoomService, RoomService>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IUserReservationService, UserReservationService>();
+
+// Adding auth
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 
