@@ -4,13 +4,16 @@ using MongoDB.Bson;
 using Hotelservices.UserAuth.Helpers;
 using System.IdentityModel.Tokens.Jwt;
 using Hotelservices.UserAuth.IdentityModels;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 var configuration = builder.Configuration;
 
 // Add logging services
-builder.Logging.AddConsole();
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
 
 // Adding MongoDB to the services
 var connectionString = configuration.GetConnectionString("MongoDBConnection");
