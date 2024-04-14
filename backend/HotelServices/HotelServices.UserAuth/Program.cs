@@ -2,7 +2,6 @@ using HotelServices.Shared.Database;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using Hotelservices.UserAuth.Helpers;
-using System.IdentityModel.Tokens.Jwt;
 using Hotelservices.UserAuth.IdentityModels;
 using Serilog;
 
@@ -39,7 +38,7 @@ builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddMongoDbStores<ApplicationUser, ApplicationRole, ObjectId>(connectionString, databaseName);
 
-builder.Services.AddSingleton<JwtSecurityTokenHandler>();
+// builder.Services.AddSingleton<JwtSecurityTokenHandler>();
 var secretKey = configuration["Jwt:Secret"];
 builder.Services.AddSingleton(new JwtTokenGenerator(secretKey));
 

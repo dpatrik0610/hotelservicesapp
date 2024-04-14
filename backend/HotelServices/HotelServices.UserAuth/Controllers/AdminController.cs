@@ -3,16 +3,13 @@ using HotelServices.Shared.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Hotelservices.UserAuth.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize(Roles = "ADMIN")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -28,7 +25,6 @@ namespace Hotelservices.UserAuth.Controllers
 
         // User CRUD Operations
         [HttpGet("get-user/{userId}")]
-        [AllowAnonymous] // Allow access without authorization
         public async Task<IActionResult> GetUser(string userId)
         {
             _logger.LogInformation($"Retrieving user with ID {userId}...");
