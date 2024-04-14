@@ -22,5 +22,8 @@ namespace HotelServices.Shared.Models
 
         [DataType(DataType.DateTime)]
         public DateTime ReservationDate { get; } = DateTime.UtcNow;
+
+        [Required]
+        public int Price { get; set; }
     }
 }
