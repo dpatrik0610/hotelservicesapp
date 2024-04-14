@@ -1,9 +1,9 @@
 ﻿using MongoDB.Driver;
-
+using System;
 
 namespace HotelServices.Shared.Database
 {
-    public class MongoDatabaseProvider : IMongoDatabaseProvider
+    public class MongoDatabaseProvider : IMongoDatabaseProvider, IDisposable
     {
         private readonly IMongoClient _client;
         private readonly IMongoDatabase _database;
@@ -24,6 +24,11 @@ namespace HotelServices.Shared.Database
         public IMongoCollection<T> GetCollection<T>(string collectionName)
         {
             return _database.GetCollection<T>(collectionName);
+        }
+
+        public void Dispose()
+        {
+            _client.Cluster.Dispose();
         }
     }
 }
