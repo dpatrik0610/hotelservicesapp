@@ -3,9 +3,10 @@ using MongoDB.Bson;
 using Hotelservices.UserAuth.Helpers;
 using Hotelservices.UserAuth.IdentityModels;
 using Serilog;
+using HotelServices.Shared.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile("../HotelServices.Shared/Configurations/configurations.json", optional: false, reloadOnChange: true);
 var configuration = builder.Configuration;
 
 // Add logging services
@@ -33,6 +34,10 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
 
 var secretKey = configuration["Jwt:Secret"];
 builder.Services.AddSingleton(new JwtTokenGenerator(secretKey));
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    CookieConfiguration.ConfigureAuthenticationCookie(options.Cookie);
+});
 
 builder.Services.AddControllers();
 

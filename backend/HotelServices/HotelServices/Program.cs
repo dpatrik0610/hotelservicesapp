@@ -3,9 +3,10 @@ using HotelServices.Services.Interfaces;
 using HotelServices.Services;
 
 using Serilog;
+using HotelServices.Shared.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile("../HotelServices.Shared/Configurations/configurations.json", optional: false, reloadOnChange: true);
 var configuration = builder.Configuration;
 
 // Add logging services
@@ -20,23 +21,21 @@ if (string.IsNullOrEmpty(connectionString))
     throw new ApplicationException("MongoDB connection settings are missing or invalid.");
 }
 
+// Adding Services
 builder.Services.AddSingleton<IMongoDatabaseProvider>(provider =>
 {
     return new MongoDatabaseProvider(connectionString);
 });
 
-// Adding Services
 builder.Services.AddSingleton<IRoomService, RoomService>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IUserReservationService, UserReservationService>();
 
-// Adding auth
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    CookieConfiguration.ConfigureAuthenticationCookie(options.Cookie);
+});
 
-builder.Services.AddControllers();
-
-// Add CORS service
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",
@@ -47,6 +46,10 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
+
+builder.Services.AddControllers();
+
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
