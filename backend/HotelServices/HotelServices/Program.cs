@@ -16,14 +16,32 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
 
-builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
-    try
+builder.Services.AddSingleton<IMongoDatabaseProvider>(provider =>
+{
+    const int maxRetryAttempts = 3;
+    const int delayBetweenRetriesMs = 2000;
+    int retryAttempt = 0;
+
+    while (true)
     {
-        return new MongoDatabaseProvider(connectionString);
-    }
-    catch (Exception ex)
-    {
-        throw new ApplicationException("Failed to establish connection to the MongoDB server.", ex);
+        try
+        {
+            return new MongoDatabaseProvider(connectionString);
+        }
+        catch (Exception ex)
+        {
+            retryAttempt++;
+            if (retryAttempt > maxRetryAttempts)
+            {
+                throw new ApplicationException("Failed to establish connection to the MongoDB server after multiple retries.", ex);
+            }
+
+            // Log the retry attempt
+            Console.WriteLine($"Retry attempt {retryAttempt} failed. Retrying in {delayBetweenRetriesMs / 1000} seconds.");
+
+            // Wait before retrying
+            Thread.Sleep(delayBetweenRetriesMs);
+        }
     }
 });
 

@@ -23,7 +23,7 @@ namespace HotelServices.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "User, Manager, Admin")]
+        [Authorize]
         public async Task<IActionResult> CreateUserReservation(UserReservation userReservation)
         {
             try
@@ -40,7 +40,7 @@ namespace HotelServices.Controllers
 
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "User, Manager")]
+        [Authorize]
         public async Task<IActionResult> DeleteUserReservation(string id)
         {
             try

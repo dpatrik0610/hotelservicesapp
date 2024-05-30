@@ -1,5 +1,4 @@
-﻿using HotelServices.Controllers;
-using HotelServices.Services.Interfaces;
+﻿using HotelServices.Services.Interfaces;
 using HotelServices.Shared.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
