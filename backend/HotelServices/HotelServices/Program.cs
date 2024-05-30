@@ -5,44 +5,24 @@ using HotelServices.Services;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetValue<string>("MongoDB:ConnectionURI");
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+var configuration = builder.Configuration;
 
+// Add logging services
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
+
+// Adding MongoDB to the services
+var connectionString = configuration.GetConnectionString("MongoDBConnection");
 if (string.IsNullOrEmpty(connectionString))
 {
     throw new ApplicationException("MongoDB connection settings are missing or invalid.");
 }
 
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .CreateLogger();
-
 builder.Services.AddSingleton<IMongoDatabaseProvider>(provider =>
 {
-    const int maxRetryAttempts = 3;
-    const int delayBetweenRetriesMs = 2000;
-    int retryAttempt = 0;
-
-    while (true)
-    {
-        try
-        {
-            return new MongoDatabaseProvider(connectionString);
-        }
-        catch (Exception ex)
-        {
-            retryAttempt++;
-            if (retryAttempt > maxRetryAttempts)
-            {
-                throw new ApplicationException("Failed to establish connection to the MongoDB server after multiple retries.", ex);
-            }
-
-            // Log the retry attempt
-            Console.WriteLine($"Retry attempt {retryAttempt} failed. Retrying in {delayBetweenRetriesMs / 1000} seconds.");
-
-            // Wait before retrying
-            Thread.Sleep(delayBetweenRetriesMs);
-        }
-    }
+    return new MongoDatabaseProvider(connectionString);
 });
 
 // Adding Services

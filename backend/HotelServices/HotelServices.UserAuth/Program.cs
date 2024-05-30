@@ -22,15 +22,9 @@ if (string.IsNullOrEmpty(connectionString))
 
 var databaseName = configuration["DatabaseName"];
 
-builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
-    try
-    {
-        return new MongoDatabaseProvider(connectionString);
-    }
-    catch (Exception ex)
-    {
-        throw new ApplicationException("Failed to establish connection to the MongoDB server.", ex);
-    }
+builder.Services.AddSingleton<IMongoDatabaseProvider>(provider =>
+{
+    return new MongoDatabaseProvider(connectionString);
 });
 
 // Adding MongoDB Identity
