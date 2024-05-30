@@ -20,8 +20,9 @@ namespace HotelServices.Shared.Models
         [Required(ErrorMessage = "Room ID is required")]
         public string? RoomId { get; set; }
 
+        [Required]
         [DataType(DataType.DateTime)]
-        public DateTime ReservationDate { get; } = DateTime.UtcNow;
+        public DateTime ReservationDate { get; set; } = DateTime.UtcNow;
 
         [Required]
         public int Price { get; set; }

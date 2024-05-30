@@ -8,10 +8,13 @@ namespace HotelServices.Shared.Models.Enums
     {
         [EnumMember(Value = "Standard")]
         Standard,
+
         [EnumMember(Value = "Comfort")]
         Comfort,
+
         [EnumMember(Value = "Comfort+")]
         ComfortPlus,
+
         [EnumMember(Value = "Presidential")]
         Presidential
     }
