@@ -5,10 +5,6 @@ using HotelServices.Shared.Models.Enums;
 using Hotelservices.UserAuth.Helpers;
 using Hotelservices.UserAuth.Models;
 using Hotelservices.UserAuth.IdentityModels;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hotelservices.UserAuth.Controllers
 {
@@ -17,21 +13,18 @@ namespace Hotelservices.UserAuth.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly JwtTokenGenerator _jwtTokenGenerator;
         private readonly ILogger<AccountController> _logger;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager,
             SignInManager<ApplicationUser> signInManager,
             JwtTokenGenerator jwtTokenGenerator,
             ILogger<AccountController> logger
         )
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _signInManager = signInManager;
             _jwtTokenGenerator = jwtTokenGenerator;
             _logger = logger;
@@ -42,6 +35,13 @@ namespace Hotelservices.UserAuth.Controllers
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             _logger.LogInformation("User login attempt.");
+
+            // Check if the user is already authenticated
+            if (User.Identity.IsAuthenticated)
+            {
+                _logger.LogWarning("User is already authenticated.");
+                return BadRequest("User is already logged in.");
+            }
 
             if (!ModelState.IsValid)
             {
@@ -115,7 +115,7 @@ namespace Hotelservices.UserAuth.Controllers
                 return BadRequest(ModelState);
             }
 
-            var token = _jwtTokenGenerator.GenerateJwtToken(applicationUser.Id.ToString(), applicationUser.UserName, new List<string>() { "None" });
+            var token = _jwtTokenGenerator.GenerateJwtToken(applicationUser.Id.ToString(), applicationUser.UserName, new List<string>() { "User" });
             Response.Cookies.Append("AuthCookie", token, new CookieOptions
             {
                 HttpOnly = true,

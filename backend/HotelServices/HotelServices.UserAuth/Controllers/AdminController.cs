@@ -60,7 +60,7 @@ namespace Hotelservices.UserAuth.Controllers
             return result.Succeeded ? Ok("User deleted successfully.") : BadRequest(result.Errors);
         }
 
-        [HttpPost("modify-user-role/{userId}")]
+        [HttpPut("modify-user-role/{userId}")]
         public async Task<IActionResult> ModifyUserRole(string userId, RoleType roleType)
         {
             _logger.LogInformation("Modifying user role...");

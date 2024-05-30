@@ -1,5 +1,4 @@
 using HotelServices.Shared.Database;
-using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using Hotelservices.UserAuth.Helpers;
 using Hotelservices.UserAuth.IdentityModels;
@@ -21,7 +20,7 @@ if (string.IsNullOrEmpty(connectionString))
     throw new ApplicationException("MongoDB connection settings are missing or invalid.");
 }
 
-var databaseName = "Hotel";
+var databaseName = configuration["DatabaseName"];
 
 builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
     try
@@ -38,7 +37,6 @@ builder.Services.AddSingleton<IMongoDatabaseProvider>(provider => {
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddMongoDbStores<ApplicationUser, ApplicationRole, ObjectId>(connectionString, databaseName);
 
-// builder.Services.AddSingleton<JwtSecurityTokenHandler>();
 var secretKey = configuration["Jwt:Secret"];
 builder.Services.AddSingleton(new JwtTokenGenerator(secretKey));
 

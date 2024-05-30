@@ -19,12 +19,11 @@ namespace Hotelservices.UserAuth.Helpers {
 
             var payload = new Dictionary<string, object>
             {
-                { "sub", userId },                             // Subject (User ID)
-                { "iss", "your_issuer" },                      // Issuer
+                { "sub", userId },                                             // Subject (User ID)
                 { "exp", new DateTimeOffset(expireTime).ToUnixTimeSeconds() }, // Expiration Time
-                { "jti", jwtId },                              // JWT ID
-                { "username", username },                      // Username
-                { "roles", roles }                              // Roles
+                { "jti", jwtId },                                              // JWT ID
+                { "username", username },                                      // Username
+                { "roles", roles }                                             // Roles
             };
 
             var token = new JwtBuilder()
