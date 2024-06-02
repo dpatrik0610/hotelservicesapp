@@ -1,29 +1,29 @@
 using HotelServices.Shared.Database;
 using HotelServices.Services.Interfaces;
 using HotelServices.Services;
-
 using Serilog;
-using HotelServices.Shared.Configurations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Newtonsoft.Json.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddJsonFile("../HotelServices.Shared/Configurations/configurations.json", optional: false, reloadOnChange: true);
+
+// Setting up Configurations
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 var configuration = builder.Configuration;
+var cookieConfig = JObject.Parse(File.ReadAllText("../HotelServices.Shared/Configurations/cookieSettings.json"));
 
 // Add logging services
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
+    .ReadFrom.Configuration(configuration)
     .CreateLogger();
-
-// Adding MongoDB to the services
-var connectionString = configuration.GetConnectionString("MongoDBConnection");
-if (string.IsNullOrEmpty(connectionString))
-{
-    throw new ApplicationException("MongoDB connection settings are missing or invalid.");
-}
+builder.Host.UseSerilog();
 
 // Adding Services
 builder.Services.AddSingleton<IMongoDatabaseProvider>(provider =>
 {
+    var connectionString = configuration.GetConnectionString("MongoDBConnection");
     return new MongoDatabaseProvider(connectionString);
 });
 
@@ -31,11 +31,49 @@ builder.Services.AddSingleton<IRoomService, RoomService>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IUserReservationService, UserReservationService>();
 
-builder.Services.ConfigureApplicationCookie(options =>
+// Configure CookieOptions
+builder.Services.Configure<CookieOptions>(options =>
 {
-    CookieConfiguration.ConfigureAuthenticationCookie(options.Cookie);
+    var cookieConfiguration = new CookieConfiguration();
+    var configuredOptions = cookieConfiguration.GetCookieOptions(cookieConfig);
+    options.Domain = configuredOptions.Domain;
+    options.Path = configuredOptions.Path;
+    options.HttpOnly = configuredOptions.HttpOnly;
+    options.Secure = configuredOptions.Secure;
+    options.SameSite = configuredOptions.SameSite;
 });
 
+// Configure JWT authentication
+var authServerUrl = configuration["AuthServer:Url"];
+var audience = configuration["Jwt:Audience"];
+var secretKey = configuration["Jwt:Secret"];
+var issuer = configuration["Jwt:Issuer"];
+var requireHttpsMetadata = bool.Parse(configuration["Jwt:RequireHttpsMetadata"]);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.Authority = authServerUrl;
+    options.Audience = audience;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = issuer,
+        ValidAudience = audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+    };
+    options.RequireHttpsMetadata = requireHttpsMetadata;
+});
+
+builder.Services.AddAuthorization();
+
+// Configure CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",
@@ -47,29 +85,28 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Add Controllers
 builder.Services.AddControllers();
 
-
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Swagger Configuration
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Development Environment Setup
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Middleware Setup
 app.UseHttpsRedirection();
-
-app.UseCors("AllowAllOrigins"); // Configure CORS middleware
-
+app.UseCors("AllowAllOrigins");
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
+Log.Information("The Hotel-API is online.");
 app.Run();
+

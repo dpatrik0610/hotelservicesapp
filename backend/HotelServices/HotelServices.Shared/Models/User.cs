@@ -25,6 +25,6 @@ namespace HotelServices.Shared.Models
 
         [Required]
         [EnumDataType(typeof(RoleType), ErrorMessage = "Invalid role type.")]
-        public RoleType? Role { get; set; } = RoleType.None;
+        public RoleType? Role { get; set; } = RoleType.User;
     }
 }

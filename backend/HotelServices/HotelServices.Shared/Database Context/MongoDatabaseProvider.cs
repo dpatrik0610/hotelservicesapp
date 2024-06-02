@@ -27,18 +27,15 @@ namespace HotelServices.Shared.Database
                     MongoClientSettings settings = MongoClientSettings.FromUrl(url);
                     _client = new MongoClient(settings);
                     _database = _client.GetDatabase(url.DatabaseName);
-                    break; // Exit the loop if connection is successful
+                    break;
                 }
                 catch (Exception ex)
                 {
                     retryAttempt++;
                     if (retryAttempt > maxRetryAttempts)
                     {
-                        throw new ApplicationException("Failed to establish connection to the MongoDB server after multiple retries.", ex);
+                        throw new ApplicationException("Failed to establish connection to the MongoDB server after multiple retries.\n", ex);
                     }
-
-                    // Log the retry attempt
-                    Console.WriteLine($"Retry attempt {retryAttempt} failed. Retrying in {delayBetweenRetriesMs / 1000} seconds.");
 
                     // Wait before retrying
                     Thread.Sleep(delayBetweenRetriesMs);
@@ -53,7 +50,7 @@ namespace HotelServices.Shared.Database
 
         public void Dispose()
         {
-            _client.Cluster.Dispose();
+            _client?.Cluster?.Dispose();
         }
     }
 }

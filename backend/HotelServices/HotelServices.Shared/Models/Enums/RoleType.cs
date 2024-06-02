@@ -12,7 +12,7 @@ namespace HotelServices.Shared.Models.Enums
     public enum RoleType
     {
         [EnumMember(Value = "")]
-        None,
+        User,
         [EnumMember(Value = "Manager")]
         Manager,
         [EnumMember(Value = "Admin")]

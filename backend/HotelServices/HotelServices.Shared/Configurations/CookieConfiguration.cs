@@ -1,21 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
 
-
-namespace HotelServices.Shared.Configurations
+public class CookieConfiguration
 {
-    public static class CookieConfiguration
+    public CookieOptions GetCookieOptions(JObject configJson)
     {
-        public static void ConfigureAuthenticationCookie(CookieBuilder options)
+        var cookieOptions = new CookieOptions
         {
-            var configJson = JObject.Parse(File.ReadAllText("cookieSettings.json"));
+            Domain = configJson["Domain"]?.ToString(),
+            Path = configJson["Path"]?.ToString(),
+            HttpOnly = configJson["HttpOnly"] != null ? (bool)configJson["HttpOnly"] : false,
+            Secure = configJson["Secure"] != null ? (bool)configJson["Secure"] : false,
+            SameSite = configJson["SameSite"] != null ? Enum.Parse<SameSiteMode>(configJson["SameSite"].ToString()) : SameSiteMode.Lax
+        };
 
-            options.Name = (string)configJson["Name"];
-            options.Domain = (string)configJson["Domain"];
-            options.Path = (string)configJson["Path"];
-            options.HttpOnly = (bool)configJson["HttpOnly"];
-            options.SecurePolicy = Enum.Parse<CookieSecurePolicy>((string)configJson["SecurePolicy"]);
-            options.SameSite = Enum.Parse<SameSiteMode>((string)configJson["SameSite"]);
-        }
+        return cookieOptions;
     }
 }

@@ -5,6 +5,7 @@ using HotelServices.Shared.Models.Enums;
 using Hotelservices.UserAuth.Helpers;
 using Hotelservices.UserAuth.Models;
 using Hotelservices.UserAuth.IdentityModels;
+using Microsoft.Extensions.Options;
 
 namespace Hotelservices.UserAuth.Controllers
 {
@@ -16,18 +17,20 @@ namespace Hotelservices.UserAuth.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly JwtTokenGenerator _jwtTokenGenerator;
         private readonly ILogger<AccountController> _logger;
-
+        private readonly CookieOptions _cookieOptions;
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             JwtTokenGenerator jwtTokenGenerator,
-            ILogger<AccountController> logger
+            ILogger<AccountController> logger,
+            IOptions<CookieOptions> cookieOptionsAccessor
         )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtTokenGenerator = jwtTokenGenerator;
             _logger = logger;
+            _cookieOptions = cookieOptionsAccessor.Value;
         }
 
         [HttpPost("login")]
@@ -69,12 +72,7 @@ namespace Hotelservices.UserAuth.Controllers
             var roles = await _userManager.GetRolesAsync(applicationUser);
 
             var token = _jwtTokenGenerator.GenerateJwtToken(applicationUser.Id.ToString(), applicationUser.UserName, roles.ToList());
-            Response.Cookies.Append("AuthCookie", token, new CookieOptions
-            {
-                HttpOnly = true,
-                SameSite = SameSiteMode.None,
-                Secure = true
-            });
+            Response.Cookies.Append("AuthCookie", token, _cookieOptions);
             return Ok(new { Token = token });
         }
 
@@ -107,7 +105,7 @@ namespace Hotelservices.UserAuth.Controllers
             }
 
             // Add the user to the default role
-            var addToRoleResult = await _userManager.AddToRoleAsync(applicationUser, RoleType.None.ToString());
+            var addToRoleResult = await _userManager.AddToRoleAsync(applicationUser, RoleType.User.ToString());
             if (!addToRoleResult.Succeeded)
             {
                 _logger.LogError("Failed to assign role to the user.");
@@ -116,12 +114,7 @@ namespace Hotelservices.UserAuth.Controllers
             }
 
             var token = _jwtTokenGenerator.GenerateJwtToken(applicationUser.Id.ToString(), applicationUser.UserName, new List<string>() { "User" });
-            Response.Cookies.Append("AuthCookie", token, new CookieOptions
-            {
-                HttpOnly = true,
-                SameSite = SameSiteMode.None,
-                Secure = true
-            });
+            Response.Cookies.Append("AuthCookie", token, _cookieOptions);
             return Ok(new { Token = token });
         }
 
